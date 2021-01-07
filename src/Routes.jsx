@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import LoginPage from './Components/LoginPage';
+import LoginPage from './Components/Auth/LoginPage';
 
 export default () => (
   <Switch>
