@@ -1,0 +1,6 @@
+export default {
+  OK: 200,
+  NOT_FOUND: 404,
+  INTERNAL_ERROR: 500,
+  NOT_AUTHORIZED: 401
+};

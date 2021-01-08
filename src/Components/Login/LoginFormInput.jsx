@@ -1,17 +1,15 @@
 import {
   FormControlLabel, TextField, Checkbox, Button, Box
 } from '@material-ui/core';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { attemptLogin, resetError } from '../../Redux/Reducers/userSlice'
+import { getLoginErrorMessage } from '../../Constants/errorMessages';
 
-const LoginField = ({
-  id, label, autoFocus, type
-}) => (
+const LoginField = (props) => (
   <TextField
-    id={id}
-    label={label}
-    autoFocus={autoFocus}
-    type={type}
+    {...props}
     variant="outlined"
     margin="normal"
     required
@@ -27,16 +25,16 @@ const RememberMe = () => (
   />
 );
 
-const handleLogin = (history) => {
-  setTimeout(() => {
-    history.push('/')
-  }, 1000);
-}
-
 const LoginFormInput = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+
+  const dispatch = useDispatch();
+  const { jwt, error, pending } = useSelector(state => state.user.login);
+  
+  if (jwt) {
+    return <Redirect to="/" />
+  }
 
   return (
     <div>
@@ -45,14 +43,19 @@ const LoginFormInput = () => {
         label="Email Address"
         autoFocus
         value={email}
-        onChange={setEmail}
+        onChange={event => setEmail(event.target.value)}
+        disabled={pending}
+        error={!!error}
       />
       <LoginField
         id="password"
         label="Password"
         type="password"
         value={password}
-        onChange={setPassword}
+        onChange={event => setPassword(event.target.value)}
+        disabled={pending}
+        helperText={getLoginErrorMessage(error)}
+        error={!!error}
       />
       <Box pt={2} pb={4}>
         <RememberMe />
@@ -62,7 +65,8 @@ const LoginFormInput = () => {
         fullWidth
         variant="contained"
         color="secondary"
-        onClick={() => handleLogin(history)}
+        onClick={() => dispatch(attemptLogin({ email, password }))}
+        disabled={pending}
       >
         Sign In
       </Button>
