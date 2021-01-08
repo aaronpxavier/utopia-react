@@ -9,7 +9,7 @@ const handleClick = (dispatch) => {
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.value);
+  const value = useSelector((state) => state.counter.value);
   console.log(value);
 
   return (
