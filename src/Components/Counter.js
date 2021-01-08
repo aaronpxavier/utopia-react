@@ -1,16 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { increment } from '../Redux/Reducers/counterSlice';
+import { incrementValue } from '../Redux/Reducers/counterSlice';
 
 const handleClick = (dispatch) => {
-  dispatch(increment());
+  dispatch(incrementValue(5));
 };
 
 const Counter = () => {
   const dispatch = useDispatch();
   const value = useSelector((state) => state.counter.value);
-  console.log(value);
 
   return (
     <div>
