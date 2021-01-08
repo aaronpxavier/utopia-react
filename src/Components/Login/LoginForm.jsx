@@ -1,6 +1,5 @@
 import { Avatar, Box, Typography } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
-// import { spacing } from '@material-ui/system';
 import styled from 'styled-components';
 import React from 'react';
 
